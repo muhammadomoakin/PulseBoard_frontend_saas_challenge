@@ -1,43 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 const DashboardLayout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar Placeholder */}
-      <aside className="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
-        <div className="p-4 border-b border-slate-700 font-bold text-xl uppercase tracking-wider">
-          PulseBoard
-        </div>
-        <nav className="flex-1 p-4">
-          <div className="space-y-4">
-            <div className="h-10 bg-slate-800 rounded-md opacity-40"></div>
-            <div className="h-10 bg-slate-800 rounded-md opacity-40"></div>
-            <div className="h-10 bg-slate-800 rounded-md opacity-40"></div>
-            <div className="h-10 bg-slate-800 rounded-md opacity-40"></div>
-          </div>
-        </nav>
-        <div className="p-4 border-t border-slate-700">
-          <div className="h-10 bg-slate-800 rounded-md opacity-40"></div>
-        </div>
-      </aside>
+    <div className="flex min-h-screen bg-slate-50">
+      {/* Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Navbar Placeholder */}
-        <header className="h-16 bg-white border-b flex items-center justify-between px-8 flex-shrink-0">
-          <div className="text-xl font-semibold text-gray-800">
-            Dashboard Overview
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="h-8 w-32 bg-gray-100 rounded-lg"></div>
-            <div className="h-10 w-10 bg-gray-200 rounded-full"></div>
-          </div>
-        </header>
+      <div className="flex-1 flex flex-col md:pl-64 min-h-screen">
+        {/* Navbar */}
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
 
-        {/* Main Scrollable Content */}
-        <main className="flex-1 overflow-y-auto p-8">
+        {/* Scrollable Content */}
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">{children}</div>
         </main>
+
+        {/* Optional Footer or Credits */}
+        <footer className="p-4 md:p-8 text-center text-slate-400 text-sm">
+          &copy; 2024 PulseBoard SaaS Dashboard. All rights reserved.
+        </footer>
       </div>
     </div>
   );
