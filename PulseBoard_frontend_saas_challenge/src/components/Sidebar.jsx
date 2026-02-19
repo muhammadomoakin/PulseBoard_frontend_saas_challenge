@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   FolderKanban,
@@ -9,10 +10,10 @@ import {
 
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
-    { icon: <LayoutDashboard size={20} />, label: "Dashboard", active: true },
-    { icon: <FolderKanban size={20} />, label: "Projects", active: false },
-    { icon: <BarChart3 size={20} />, label: "Analytics", active: false },
-    { icon: <Settings size={20} />, label: "Settings", active: false },
+    { icon: <LayoutDashboard size={20} />, label: "Dashboard", href: "/" },
+    { icon: <FolderKanban size={20} />, label: "Projects", href: "/projects" },
+    { icon: <BarChart3 size={20} />, label: "Analytics", href: "/analytics" },
+    { icon: <Settings size={20} />, label: "Settings", href: "/settings" },
   ];
 
   return (
@@ -45,12 +46,14 @@ const Sidebar = ({ isOpen, onClose }) => {
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2">
           {menuItems.map((item, index) => (
-            <button
+            <NavLink
               key={index}
-              className={`
+              to={item.href}
+              onClick={onClose}
+              className={({ isActive }) => `
                 flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-all duration-200
                 ${
-                  item.active
+                  isActive
                     ? "bg-blue-600/10 text-blue-500 font-medium"
                     : "hover:bg-slate-800 hover:text-white"
                 }
@@ -58,7 +61,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             >
               {item.icon}
               <span>{item.label}</span>
-            </button>
+            </NavLink>
           ))}
         </nav>
 
