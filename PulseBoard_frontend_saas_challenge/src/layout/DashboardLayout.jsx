@@ -12,19 +12,19 @@ const DashboardLayout = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col md:pl-64 min-h-screen">
+      <div className="flex-1 flex flex-col lg:pl-64 min-h-screen">
         {/* Navbar */}
         <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
 
         {/* Scrollable Content */}
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
         </main>
 
         {/* Optional Footer or Credits */}
-        <footer className="p-4 md:p-8 text-center text-slate-400 text-sm">
+        <footer className="p-4 sm:p-6 lg:p-8 text-center text-slate-400 text-sm">
           &copy; 2024 PulseBoard SaaS Dashboard. All rights reserved.
         </footer>
       </div>

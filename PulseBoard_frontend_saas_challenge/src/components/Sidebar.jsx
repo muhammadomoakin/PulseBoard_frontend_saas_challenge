@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity"
           onClick={onClose}
         />
       )}
@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       <aside
         className={`
         fixed top-0 left-0 h-full bg-slate-900 text-slate-300 w-64 z-50 transform transition-transform duration-300 ease-in-out
-        md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}
       `}
       >
         {/* Logo */}

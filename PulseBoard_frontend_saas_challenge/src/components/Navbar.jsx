@@ -8,7 +8,7 @@ const Navbar = ({ onMenuClick }) => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={onMenuClick}
-          className="p-2 hover:bg-slate-100 rounded-lg md:hidden text-slate-600"
+          className="p-2 hover:bg-slate-100 rounded-lg lg:hidden text-slate-600"
         >
           <Menu size={24} />
         </button>
@@ -17,8 +17,8 @@ const Navbar = ({ onMenuClick }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
-        {/* Search Bar - Hidden on mobile */}
-        <div className="hidden md:flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-transparent focus-within:border-blue-500 focus-within:bg-white transition-all">
+        {/* Search Bar - Hidden on mobile/tablet */}
+        <div className="hidden lg:flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-transparent focus-within:border-blue-500 focus-within:bg-white transition-all">
           <Search size={18} className="text-slate-400" />
           <input
             type="text"
@@ -35,11 +35,11 @@ const Navbar = ({ onMenuClick }) => {
 
         {/* Profile */}
         <div className="flex items-center gap-3 pl-2 md:pl-4 border-l border-slate-200">
-          <div className="hidden md:block text-right">
+          <div className="hidden lg:block text-right">
             <p className="text-sm font-semibold text-slate-800">John Doe</p>
             <p className="text-xs text-slate-500">Premium Plan</p>
           </div>
-          <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white ring-2 ring-slate-50 ring-offset-2">
+          <div className="w-10 h-10 bg-linear-to-tr from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white ring-2 ring-slate-50 ring-offset-2">
             <User size={20} />
           </div>
         </div>
