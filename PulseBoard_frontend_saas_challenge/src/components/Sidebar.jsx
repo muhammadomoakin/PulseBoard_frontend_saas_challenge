@@ -44,31 +44,45 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-4 py-6 space-y-1">
           {menuItems.map((item, index) => (
             <NavLink
               key={index}
               to={item.href}
               onClick={onClose}
               className={({ isActive }) => `
-                flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-all duration-200
+                flex items-center gap-3 w-full px-4 py-3 rounded-lg transition-all duration-200 relative overflow-hidden group
                 ${
                   isActive
-                    ? "bg-blue-600/10 text-blue-500 font-medium"
-                    : "hover:bg-slate-800 hover:text-white"
+                    ? "bg-blue-600/10 text-blue-400 font-semibold"
+                    : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-100"
                 }
               `}
             >
-              {item.icon}
-              <span>{item.label}</span>
+              {/* Active Indicator Bar */}
+              {({ isActive }) => (
+                <>
+                  <div
+                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-500 rounded-r-full transition-transform duration-200 ${
+                      isActive ? "scale-y-100" : "scale-y-0"
+                    }`}
+                  />
+                  <span
+                    className={`${isActive ? "text-blue-400" : "text-slate-400 group-hover:text-slate-100"}`}
+                  >
+                    {item.icon}
+                  </span>
+                  <span>{item.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
         {/* User / Bottom Section */}
         <div className="p-4 border-t border-slate-800">
-          <button className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all duration-200 text-slate-400">
-            <LogOut size={20} />
+          <button className="flex items-center gap-3 w-full px-4 py-3 rounded-lg hover:bg-slate-800/50 hover:text-slate-100 transition-all duration-200 text-slate-400 group">
+            <LogOut size={20} className="group-hover:text-slate-100" />
             <span>Logout</span>
           </button>
         </div>
