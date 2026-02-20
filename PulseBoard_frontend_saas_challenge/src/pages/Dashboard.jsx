@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Card, Container } from "../components/ui";
+import RevenueChart from "../components/charts/RevenueChart";
+import UsersGrowthChart from "../components/charts/UsersGrowthChart";
 
 const Dashboard = () => {
   return (
@@ -74,30 +76,11 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Empty State / Feature Showcase */}
-        <Card className="min-h-[450px] flex items-center justify-center border-dashed border-2 bg-gray-50/50">
-          <div className="text-center max-w-md px-6">
-            <div className="w-24 h-24 bg-white shadow-xl rounded-3xl flex items-center justify-center mx-auto mb-8 transform -rotate-6 hover:rotate-0 transition-all duration-500 ease-out border border-gray-100">
-              <span className="text-5xl">⚡</span>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 leading-tight">
-              Your Board is Ready!
-            </h3>
-            <p className="text-gray-500 mt-4 text-base leading-relaxed">
-              You're now using the PulseBoard UI system. These components are
-              fully responsive, accessible, and designed to scale with your SaaS
-              logic.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button variant="primary" className="w-full sm:w-auto px-10">
-                Build Now
-              </Button>
-              <Button variant="secondary" className="w-full sm:w-auto px-10">
-                Documentation
-              </Button>
-            </div>
-          </div>
-        </Card>
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <RevenueChart />
+          <UsersGrowthChart />
+        </div>
       </div>
     </Container>
   );
