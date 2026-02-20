@@ -21,45 +21,56 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="flex flex-col gap-1">
-            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
-              Revenue
+            <span className="text-sm font-medium text-gray-500">
+              Total Revenue
             </span>
-            <div className="text-3xl font-bold text-gray-900 leading-none">
-              $24,500.00
+            <div className="text-3xl font-bold text-gray-900">$45,231.89</div>
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="text-sm font-semibold text-green-600">
+                +20.1%
+              </span>
+              <span className="text-xs text-gray-400">from last month</span>
             </div>
-            <p className="text-sm text-gray-500 mt-2">
-              <span className="text-green-600 font-semibold">↑ 14%</span> vs
-              last month
-            </p>
           </Card>
 
           <Card className="flex flex-col gap-1">
-            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
-              Active Tasks
+            <span className="text-sm font-medium text-gray-500">
+              Active Users
             </span>
-            <div className="text-3xl font-bold text-gray-900 leading-none">
-              128
+            <div className="text-3xl font-bold text-gray-900">2,350</div>
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="text-sm font-semibold text-green-600">
+                +180.1%
+              </span>
+              <span className="text-xs text-gray-400">from last month</span>
             </div>
-            <p className="text-sm text-gray-500 mt-2">
-              <span className="text-green-600 font-semibold">↑ 8%</span> vs last
-              month
-            </p>
           </Card>
 
-          <Card className="flex flex-col gap-1 sm:col-span-2 lg:col-span-1">
-            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
-              Pulse Score
+          <Card className="flex flex-col gap-1">
+            <span className="text-sm font-medium text-gray-500">
+              Monthly Growth
             </span>
-            <div className="text-3xl font-bold text-gray-900 leading-none">
-              94.2%
+            <div className="text-3xl font-bold text-gray-900">12.5%</div>
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="text-sm font-semibold text-green-600">+19%</span>
+              <span className="text-xs text-gray-400">from last month</span>
             </div>
-            <p className="text-sm text-gray-500 mt-2">
-              <span className="text-red-600 font-semibold">↓ 2%</span> vs last
-              month
-            </p>
+          </Card>
+
+          <Card className="flex flex-col gap-1">
+            <span className="text-sm font-medium text-gray-500">
+              Conversion Rate
+            </span>
+            <div className="text-3xl font-bold text-gray-900">3.2%</div>
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="text-sm font-semibold text-green-600">
+                +1.2%
+              </span>
+              <span className="text-xs text-gray-400">from last month</span>
+            </div>
           </Card>
         </div>
 
