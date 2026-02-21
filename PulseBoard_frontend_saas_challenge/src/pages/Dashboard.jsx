@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/charts/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
+import RecentActivity from "../components/dashboard/RecentActivity";
 
 const Dashboard = () => {
   return (
@@ -80,6 +81,11 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <RevenueChart />
           <UsersGrowthChart />
+        </div>
+
+        {/* Recent Activity Section */}
+        <div className="mt-8">
+          <RecentActivity />
         </div>
       </div>
     </Container>
