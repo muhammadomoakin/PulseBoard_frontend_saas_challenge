@@ -42,9 +42,9 @@ const UsersGrowthChart = () => {
   return (
     <Card className="flex flex-col h-[400px] w-full group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/5 border-transparent hover:border-indigo-100/50">
       {/* Header Section */}
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-4 flex items-start justify-between">
         <div>
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+          <h3 className="text-xl font-semibold text-slate-900 tracking-tight">
             User Growth
           </h3>
           <p className="text-sm text-slate-500 mt-1 font-medium">

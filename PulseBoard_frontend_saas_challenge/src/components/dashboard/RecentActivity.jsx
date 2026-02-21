@@ -45,8 +45,8 @@ const activities = [
 const RecentActivity = () => {
   return (
     <Card className="flex flex-col">
-      <div className="mb-6">
-        <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+      <div className="mb-4">
+        <h3 className="text-xl font-semibold text-slate-900 tracking-tight">
           Recent Activity
         </h3>
         <p className="text-sm text-slate-500 mt-1 font-medium">

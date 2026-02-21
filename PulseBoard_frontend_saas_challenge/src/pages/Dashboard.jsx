@@ -7,7 +7,7 @@ import RecentActivity from "../components/dashboard/RecentActivity";
 const Dashboard = () => {
   return (
     <Container className="py-8">
-      <div className="flex flex-col gap-8">
+      <div className="space-y-8">
         {/* Header Section */}
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -25,68 +25,77 @@ const Dashboard = () => {
         </header>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-gray-500">
-              Total Revenue
-            </span>
-            <div className="text-3xl font-bold text-gray-900">$45,231.89</div>
-            <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-sm font-semibold text-green-600">
-                +20.1%
+        <section>
+          <h3 className="text-xl font-semibold text-slate-900 mb-4">
+            Key Metrics
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-gray-500">
+                Total Revenue
               </span>
-              <span className="text-xs text-gray-400">from last month</span>
-            </div>
-          </Card>
+              <div className="text-3xl font-bold text-gray-900">$45,231.89</div>
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-sm font-semibold text-green-600">
+                  +20.1%
+                </span>
+                <span className="text-xs text-gray-400">from last month</span>
+              </div>
+            </Card>
 
-          <Card className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-gray-500">
-              Active Users
-            </span>
-            <div className="text-3xl font-bold text-gray-900">2,350</div>
-            <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-sm font-semibold text-green-600">
-                +180.1%
+            <Card className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-gray-500">
+                Active Users
               </span>
-              <span className="text-xs text-gray-400">from last month</span>
-            </div>
-          </Card>
+              <div className="text-3xl font-bold text-gray-900">2,350</div>
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-sm font-semibold text-green-600">
+                  +180.1%
+                </span>
+                <span className="text-xs text-gray-400">from last month</span>
+              </div>
+            </Card>
 
-          <Card className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-gray-500">
-              Monthly Growth
-            </span>
-            <div className="text-3xl font-bold text-gray-900">12.5%</div>
-            <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-sm font-semibold text-green-600">+19%</span>
-              <span className="text-xs text-gray-400">from last month</span>
-            </div>
-          </Card>
-
-          <Card className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-gray-500">
-              Conversion Rate
-            </span>
-            <div className="text-3xl font-bold text-gray-900">3.2%</div>
-            <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-sm font-semibold text-green-600">
-                +1.2%
+            <Card className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-gray-500">
+                Monthly Growth
               </span>
-              <span className="text-xs text-gray-400">from last month</span>
-            </div>
-          </Card>
-        </div>
+              <div className="text-3xl font-bold text-gray-900">12.5%</div>
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-sm font-semibold text-green-600">
+                  +19%
+                </span>
+                <span className="text-xs text-gray-400">from last month</span>
+              </div>
+            </Card>
+
+            <Card className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-gray-500">
+                Conversion Rate
+              </span>
+              <div className="text-3xl font-bold text-gray-900">3.2%</div>
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-sm font-semibold text-green-600">
+                  +1.2%
+                </span>
+                <span className="text-xs text-gray-400">from last month</span>
+              </div>
+            </Card>
+          </div>
+        </section>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RevenueChart />
-          <UsersGrowthChart />
-        </div>
+        <section>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <RevenueChart />
+            <UsersGrowthChart />
+          </div>
+        </section>
 
         {/* Recent Activity Section */}
-        <div className="mt-8">
+        <section>
           <RecentActivity />
-        </div>
+        </section>
       </div>
     </Container>
   );

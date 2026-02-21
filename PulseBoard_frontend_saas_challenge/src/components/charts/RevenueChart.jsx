@@ -62,9 +62,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 const RevenueChart = () => {
   return (
     <Card className="flex flex-col h-[400px] w-full group">
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-4 flex items-start justify-between">
         <div>
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+          <h3 className="text-xl font-semibold text-slate-900 tracking-tight">
             Revenue Overview
           </h3>
           <p className="text-sm text-slate-500 mt-1 font-medium">
