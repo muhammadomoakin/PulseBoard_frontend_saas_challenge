@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/charts/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
+import SearchBar from "../components/dashboard/SearchBar";
 import RecentActivity from "../components/dashboard/RecentActivity";
 
 const Dashboard = () => {
@@ -90,6 +91,11 @@ const Dashboard = () => {
             <RevenueChart />
             <UsersGrowthChart />
           </div>
+        </section>
+
+        {/* Search Bar Section */}
+        <section>
+          <SearchBar />
         </section>
 
         {/* Recent Activity Section */}
