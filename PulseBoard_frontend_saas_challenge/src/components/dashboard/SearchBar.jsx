@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Search } from "lucide-react";
 
 /**
@@ -11,9 +11,7 @@ import { Search } from "lucide-react";
  * - Responsive, modern SaaS design
  * - Focus-within ring for improved UX
  */
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
+const SearchBar = ({ value, onChange }) => {
   return (
     <div className="w-full">
       <div className="bg-white shadow-sm rounded-xl px-4 py-3 flex items-center border border-gray-200 focus-within:ring-2 focus-within:ring-indigo-500 transition-all duration-200">
@@ -25,8 +23,8 @@ const SearchBar = () => {
           type="text"
           className="w-full bg-transparent border-none outline-none text-gray-700 placeholder:text-gray-400 text-sm md:text-base"
           placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         />
       </div>
     </div>
