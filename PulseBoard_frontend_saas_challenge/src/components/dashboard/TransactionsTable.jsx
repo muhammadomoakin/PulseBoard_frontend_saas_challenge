@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { Card } from "../ui";
 
@@ -47,6 +47,13 @@ const transactions = [
 ];
 
 const TransactionsTable = () => {
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const filteredTransactions =
+    statusFilter === "All"
+      ? transactions
+      : transactions.filter((tx) => tx.status === statusFilter);
+
   /**
    * Returns Tailwind classes and icon for status badges based on transaction status.
    * @param {string} status
@@ -83,9 +90,16 @@ const TransactionsTable = () => {
         <h3 className="text-lg font-semibold text-gray-900">
           Recent Transactions
         </h3>
-        <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
-          View All
-        </button>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer bg-white"
+        >
+          <option value="All">All</option>
+          <option value="Completed">Completed</option>
+          <option value="Pending">Pending</option>
+          <option value="Failed">Failed</option>
+        </select>
       </div>
 
       {/* Responsive Table Container */}
@@ -111,7 +125,7 @@ const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {transactions.map((transaction) => {
+            {filteredTransactions.map((transaction) => {
               const statusConfig = getStatusConfig(transaction.status);
               return (
                 <tr
