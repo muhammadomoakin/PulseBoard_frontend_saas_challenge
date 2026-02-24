@@ -1,58 +1,57 @@
 import React, { useState } from "react";
-import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-react";
 import { Card } from "../ui";
 
-// Mock transaction data
-const transactions = [
-  {
-    id: "TRX-001",
-    customerName: "Alex Rivera",
-    email: "alex.rivera@example.com",
-    amount: "$1,250.00",
-    status: "Completed",
-    date: "Feb 24, 2024",
-  },
-  {
-    id: "TRX-002",
-    customerName: "Sarah Smith",
-    email: "sarah.s@example.com",
-    amount: "$850.50",
-    status: "Pending",
-    date: "Feb 23, 2024",
-  },
-  {
-    id: "TRX-003",
-    customerName: "Michael Chen",
-    email: "m.chen@example.com",
-    amount: "$2,100.00",
-    status: "Completed",
-    date: "Feb 22, 2024",
-  },
-  {
-    id: "TRX-004",
-    customerName: "Emma Wilson",
-    email: "emma.w@example.com",
-    amount: "$120.00",
-    status: "Failed",
-    date: "Feb 21, 2024",
-  },
-  {
-    id: "TRX-005",
-    customerName: "James Rodriguez",
-    email: "j.rod@example.com",
-    amount: "$540.00",
-    status: "Completed",
-    date: "Feb 20, 2024",
-  },
-];
+import { transactions } from "@/data/transactions";
 
 const TransactionsTable = () => {
   const [statusFilter, setStatusFilter] = useState("All");
+  const [sortField, setSortField] = useState(null);
+  const [sortDirection, setSortDirection] = useState("asc");
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
 
   const filteredTransactions =
     statusFilter === "All"
       ? transactions
       : transactions.filter((tx) => tx.status === statusFilter);
+
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    if (!sortField) return 0;
+
+    let valueA = a[sortField];
+    let valueB = b[sortField];
+
+    if (sortField === "date") {
+      valueA = new Date(valueA);
+      valueB = new Date(valueB);
+    }
+
+    if (sortField === "amount") {
+      // Remove '$' and ',' to compare as numbers
+      valueA = parseFloat(valueA.replace(/[$,]/g, ""));
+      valueB = parseFloat(valueB.replace(/[$,]/g, ""));
+    }
+
+    if (sortDirection === "asc") {
+      return valueA > valueB ? 1 : -1;
+    } else {
+      return valueA < valueB ? 1 : -1;
+    }
+  });
 
   /**
    * Returns Tailwind classes and icon for status badges based on transaction status.
@@ -83,6 +82,15 @@ const TransactionsTable = () => {
     }
   };
 
+  const renderSortIndicator = (field) => {
+    if (sortField !== field) return null;
+    return sortDirection === "asc" ? (
+      <ChevronUp size={14} className="ml-1 inline" />
+    ) : (
+      <ChevronDown size={14} className="ml-1 inline" />
+    );
+  };
+
   return (
     <Card className="shadow-sm overflow-hidden">
       {/* Section Title */}
@@ -103,8 +111,8 @@ const TransactionsTable = () => {
       </div>
 
       {/* Responsive Table Container */}
-      <div className="overflow-x-auto -mx-6">
-        <table className="w-full text-left border-collapse">
+      <div className="overflow-x-auto w-full">
+        <table className="min-w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50/50 border-y border-gray-100">
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -113,11 +121,21 @@ const TransactionsTable = () => {
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Customer
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Date
+              <th
+                className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100/50 transition-colors"
+                onClick={() => handleSort("date")}
+              >
+                <div className="flex items-center">
+                  Date {renderSortIndicator("date")}
+                </div>
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Amount
+              <th
+                className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100/50 transition-colors"
+                onClick={() => handleSort("amount")}
+              >
+                <div className="flex items-center">
+                  Amount {renderSortIndicator("amount")}
+                </div>
               </th>
               <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Status
@@ -125,7 +143,7 @@ const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {filteredTransactions.map((transaction) => {
+            {sortedTransactions.map((transaction) => {
               const statusConfig = getStatusConfig(transaction.status);
               return (
                 <tr

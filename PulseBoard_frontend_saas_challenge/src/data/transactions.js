@@ -1,0 +1,42 @@
+export const transactions = [
+  {
+    id: "TRX-001",
+    customerName: "Alex Rivera",
+    email: "alex.rivera@example.com",
+    amount: "$1,250.00",
+    status: "Completed",
+    date: "Feb 24, 2024",
+  },
+  {
+    id: "TRX-002",
+    customerName: "Sarah Smith",
+    email: "sarah.s@example.com",
+    amount: "$850.50",
+    status: "Pending",
+    date: "Feb 23, 2024",
+  },
+  {
+    id: "TRX-003",
+    customerName: "Michael Chen",
+    email: "m.chen@example.com",
+    amount: "$2,100.00",
+    status: "Completed",
+    date: "Feb 22, 2024",
+  },
+  {
+    id: "TRX-004",
+    customerName: "Emma Wilson",
+    email: "emma.w@example.com",
+    amount: "$120.00",
+    status: "Failed",
+    date: "Feb 21, 2024",
+  },
+  {
+    id: "TRX-005",
+    customerName: "James Rodriguez",
+    email: "j.rod@example.com",
+    amount: "$540.00",
+    status: "Completed",
+    date: "Feb 20, 2024",
+  },
+];
