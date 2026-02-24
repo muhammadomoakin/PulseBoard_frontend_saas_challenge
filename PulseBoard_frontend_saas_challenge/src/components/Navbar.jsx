@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Bell, Search, User } from "lucide-react";
+import { Menu, Bell, User } from "lucide-react";
 
 const Navbar = ({ onMenuClick }) => {
   return (
@@ -17,16 +17,6 @@ const Navbar = ({ onMenuClick }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
-        {/* Search Bar - Hidden on mobile/tablet */}
-        <div className="hidden lg:flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-transparent focus-within:border-blue-500 focus-within:bg-white transition-all">
-          <Search size={18} className="text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent border-none focus:ring-0 text-sm w-64 ml-2 text-slate-600 outline-none"
-          />
-        </div>
-
         {/* Notifications */}
         <button className="p-2 hover:bg-slate-100 rounded-full text-slate-500 relative">
           <Bell size={20} />
