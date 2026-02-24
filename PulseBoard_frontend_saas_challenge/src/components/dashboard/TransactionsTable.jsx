@@ -1,123 +1,157 @@
 import React from "react";
+import { CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Card } from "../ui";
 
+// Mock transaction data
 const transactions = [
   {
-    id: "TXN-101",
-    customer: "Sarah Jenkins",
-    email: "sarah.j@example.com",
-    amount: "$450.00",
+    id: "TRX-001",
+    customerName: "Alex Rivera",
+    email: "alex.rivera@example.com",
+    amount: "$1,250.00",
     status: "Completed",
-    date: "Oct 24, 2023",
+    date: "Feb 24, 2024",
   },
   {
-    id: "TXN-102",
-    customer: "Michael Chen",
-    email: "m.chen@example.com",
-    amount: "$1,200.00",
+    id: "TRX-002",
+    customerName: "Sarah Smith",
+    email: "sarah.s@example.com",
+    amount: "$850.50",
     status: "Pending",
-    date: "Oct 23, 2023",
+    date: "Feb 23, 2024",
   },
   {
-    id: "TXN-103",
-    customer: "Emma Wilson",
+    id: "TRX-003",
+    customerName: "Michael Chen",
+    email: "m.chen@example.com",
+    amount: "$2,100.00",
+    status: "Completed",
+    date: "Feb 22, 2024",
+  },
+  {
+    id: "TRX-004",
+    customerName: "Emma Wilson",
     email: "emma.w@example.com",
-    amount: "$89.99",
+    amount: "$120.00",
     status: "Failed",
-    date: "Oct 22, 2023",
+    date: "Feb 21, 2024",
   },
   {
-    id: "TXN-104",
-    customer: "James Rodriguez",
+    id: "TRX-005",
+    customerName: "James Rodriguez",
     email: "j.rod@example.com",
-    amount: "$299.50",
+    amount: "$540.00",
     status: "Completed",
-    date: "Oct 21, 2023",
-  },
-  {
-    id: "TXN-105",
-    customer: "Olivia Taylor",
-    email: "olivia.t@example.com",
-    amount: "$560.00",
-    status: "Completed",
-    date: "Oct 20, 2023",
+    date: "Feb 20, 2024",
   },
 ];
 
 const TransactionsTable = () => {
-  const getStatusStyles = (status) => {
+  /**
+   * Returns Tailwind classes and icon for status badges based on transaction status.
+   * @param {string} status
+   */
+  const getStatusConfig = (status) => {
     switch (status) {
       case "Completed":
-        return "bg-green-100 text-green-700";
+        return {
+          bg: "bg-green-50 text-green-700 border-green-200",
+          icon: <CheckCircle2 size={14} className="mr-1" />,
+        };
       case "Pending":
-        return "bg-yellow-100 text-yellow-700";
+        return {
+          bg: "bg-yellow-50 text-yellow-700 border-yellow-200",
+          icon: <Clock size={14} className="mr-1" />,
+        };
       case "Failed":
-        return "bg-red-100 text-red-700";
+        return {
+          bg: "bg-red-50 text-red-700 border-red-200",
+          icon: <AlertCircle size={14} className="mr-1" />,
+        };
       default:
-        return "bg-gray-100 text-gray-700";
+        return {
+          bg: "bg-gray-50 text-gray-700 border-gray-200",
+          icon: null,
+        };
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6">
-      <h3 className="text-lg font-semibold mb-4 text-slate-900">
-        Recent Transactions
-      </h3>
+    <Card className="shadow-sm overflow-hidden">
+      {/* Section Title */}
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold text-gray-900">
+          Recent Transactions
+        </h3>
+        <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+          View All
+        </button>
+      </div>
 
-      <div className="overflow-x-auto">
+      {/* Responsive Table Container */}
+      <div className="overflow-x-auto -mx-6">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-100">
-              <th className="px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Transaction ID
+            <tr className="bg-gray-50/50 border-y border-gray-100">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                ID
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Customer
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Date
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Amount
               </th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Status
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
-            {transactions.map((txn) => (
-              <tr
-                key={txn.id}
-                className="hover:bg-slate-50 transition-colors duration-150"
-              >
-                <td className="px-4 py-4 text-sm font-medium text-slate-900">
-                  {txn.id}
-                </td>
-                <td className="px-4 py-4">
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold text-slate-700">
-                      {txn.customer}
+          <tbody className="divide-y divide-gray-100">
+            {transactions.map((transaction) => {
+              const statusConfig = getStatusConfig(transaction.status);
+              return (
+                <tr
+                  key={transaction.id}
+                  className="hover:bg-gray-50/50 transition-colors duration-200 group"
+                >
+                  <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                    {transaction.id}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
+                        {transaction.customerName}
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {transaction.email}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-600">
+                    {transaction.date}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-bold text-gray-900">
+                    {transaction.amount}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${statusConfig.bg}`}
+                    >
+                      {statusConfig.icon}
+                      {transaction.status}
                     </span>
-                    <span className="text-xs text-slate-500">{txn.email}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-4 text-sm text-slate-600">{txn.date}</td>
-                <td className="px-4 py-4 text-sm font-bold text-slate-900">
-                  {txn.amount}
-                </td>
-                <td className="px-4 py-4">
-                  <span
-                    className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyles(txn.status)}`}
-                  >
-                    {txn.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
-    </div>
+    </Card>
   );
 };
 

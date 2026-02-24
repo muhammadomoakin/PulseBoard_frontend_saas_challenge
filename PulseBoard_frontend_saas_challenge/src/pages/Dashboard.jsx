@@ -4,6 +4,7 @@ import RevenueChart from "../components/charts/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
 import SearchBar from "../components/dashboard/SearchBar";
 import RecentActivity from "../components/dashboard/RecentActivity";
+import TransactionsTable from "../components/dashboard/TransactionsTable";
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -103,6 +104,11 @@ const Dashboard = () => {
         {/* Recent Activity Section */}
         <section>
           <RecentActivity searchQuery={searchQuery} />
+        </section>
+
+        {/* Transactions Section */}
+        <section>
+          <TransactionsTable />
         </section>
       </div>
     </Container>
