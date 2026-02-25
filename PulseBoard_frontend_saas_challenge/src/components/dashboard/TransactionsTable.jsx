@@ -63,9 +63,15 @@ const TransactionsTable = ({ searchQuery = "" }) => {
     }
 
     if (sortField === "amount") {
-      // Remove '$' and ',' to compare as numbers
-      valueA = parseFloat(valueA.replace(/[$,]/g, ""));
-      valueB = parseFloat(valueB.replace(/[$,]/g, ""));
+      // Handle both string currency format and raw numbers
+      valueA =
+        typeof valueA === "string"
+          ? parseFloat(valueA.replace(/[$,]/g, ""))
+          : valueA;
+      valueB =
+        typeof valueB === "string"
+          ? parseFloat(valueB.replace(/[$,]/g, ""))
+          : valueB;
     }
 
     if (sortDirection === "asc") {
