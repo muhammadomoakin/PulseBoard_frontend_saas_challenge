@@ -103,12 +103,12 @@ const Dashboard = () => {
 
         {/* Recent Activity Section */}
         <section>
-          <RecentActivity searchQuery={searchQuery} />
+          <RecentActivity />
         </section>
 
         {/* Transactions Section */}
         <section>
-          <TransactionsTable />
+          <TransactionsTable searchQuery={searchQuery} />
         </section>
       </div>
     </Container>

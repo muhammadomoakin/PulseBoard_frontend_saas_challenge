@@ -42,11 +42,7 @@ const activities = [
  * Displays a list of recent events in a styled card container.
  * Part of the PulseBoard SaaS dashboard.
  */
-const RecentActivity = ({ searchQuery = "" }) => {
-  const filteredActivities = activities.filter((activity) =>
-    activity.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
-
+const RecentActivity = () => {
   return (
     <Card className="flex flex-col">
       <div className="mb-4">
@@ -59,28 +55,22 @@ const RecentActivity = ({ searchQuery = "" }) => {
       </div>
 
       <div className="flex flex-col -mx-6">
-        {filteredActivities.length > 0 ? (
-          filteredActivities.map((activity) => (
-            <div
-              key={activity.id}
-              className="flex items-center justify-between py-4 px-6 border-b border-slate-50 hover:bg-slate-50/50 transition-all duration-200 cursor-pointer group last:border-0"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-indigo-500 group-hover:scale-125 transition-transform"></div>
-                <span className="text-sm font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors">
-                  {activity.title}
-                </span>
-              </div>
-              <span className="text-xs font-medium text-slate-400">
-                {activity.time}
+        {activities.map((activity) => (
+          <div
+            key={activity.id}
+            className="flex items-center justify-between py-4 px-6 border-b border-slate-50 hover:bg-slate-50/50 transition-all duration-200 cursor-pointer group last:border-0"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-indigo-500 group-hover:scale-125 transition-transform"></div>
+              <span className="text-sm font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors">
+                {activity.title}
               </span>
             </div>
-          ))
-        ) : (
-          <div className="py-8 px-6 text-center text-slate-500 italic">
-            No activities found matching "{searchQuery}"
+            <span className="text-xs font-medium text-slate-400">
+              {activity.time}
+            </span>
           </div>
-        )}
+        ))}
       </div>
 
       <button className="mt-6 text-sm font-bold text-indigo-600 hover:text-indigo-700 transition-colors inline-flex items-center gap-1 group">
