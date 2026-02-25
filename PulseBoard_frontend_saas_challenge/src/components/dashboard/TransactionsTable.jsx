@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CheckCircle2,
   Clock,
@@ -14,6 +14,15 @@ const TransactionsTable = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -143,43 +152,66 @@ const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {sortedTransactions.map((transaction) => {
-              const statusConfig = getStatusConfig(transaction.status);
-              return (
-                <tr
-                  key={transaction.id}
-                  className="hover:bg-gray-50/50 transition-colors duration-200 group"
-                >
-                  <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                    {transaction.id}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
-                        {transaction.customerName}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {transaction.email}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
-                    {transaction.date}
-                  </td>
-                  <td className="px-4 py-3 text-sm font-bold text-gray-900">
-                    {transaction.amount}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${statusConfig.bg}`}
+            {isLoading
+              ? [...Array(5)].map((_, i) => (
+                  <tr key={i} className="animate-pulse">
+                    <td className="px-4 py-4">
+                      <div className="h-4 bg-gray-200 rounded w-16"></div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="space-y-2">
+                        <div className="h-4 bg-gray-200 rounded w-32"></div>
+                        <div className="h-3 bg-gray-100 rounded w-24"></div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="h-4 bg-gray-200 rounded w-20"></div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="h-4 bg-gray-200 rounded w-16"></div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="h-6 bg-gray-200 rounded-full w-20"></div>
+                    </td>
+                  </tr>
+                ))
+              : sortedTransactions.map((transaction) => {
+                  const statusConfig = getStatusConfig(transaction.status);
+                  return (
+                    <tr
+                      key={transaction.id}
+                      className="hover:bg-gray-50/50 transition-colors duration-200 group"
                     >
-                      {statusConfig.icon}
-                      {transaction.status}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
+                      <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                        {transaction.id}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
+                            {transaction.customerName}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {transaction.email}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-600">
+                        {transaction.date}
+                      </td>
+                      <td className="px-4 py-3 text-sm font-bold text-gray-900">
+                        {transaction.amount}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${statusConfig.bg}`}
+                        >
+                          {statusConfig.icon}
+                          {transaction.status}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
           </tbody>
         </table>
       </div>
