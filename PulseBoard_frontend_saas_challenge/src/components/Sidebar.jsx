@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
-  FolderKanban,
+  History,
   BarChart3,
   Settings,
   LogOut,
@@ -11,7 +11,11 @@ import {
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
     { icon: <LayoutDashboard size={20} />, label: "Dashboard", href: "/" },
-    { icon: <FolderKanban size={20} />, label: "Projects", href: "/projects" },
+    {
+      icon: <History size={20} />,
+      label: "Transactions",
+      href: "/transactions",
+    },
     { icon: <BarChart3 size={20} />, label: "Analytics", href: "/analytics" },
     { icon: <Settings size={20} />, label: "Settings", href: "/settings" },
   ];
