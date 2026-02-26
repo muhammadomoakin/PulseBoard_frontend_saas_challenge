@@ -100,7 +100,7 @@ const TransactionsTable = ({ searchQuery = "" }) => {
    */
   const getStatusConfig = (status) => {
     switch (status) {
-      case "Completed":
+      case "Success":
         return {
           bg: "bg-green-50 text-green-700 border-green-200",
           icon: <CheckCircle2 size={14} className="mr-1" />,
@@ -136,9 +136,7 @@ const TransactionsTable = ({ searchQuery = "" }) => {
     <Card className="shadow-sm overflow-hidden">
       {/* Section Title */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">
-          Recent Transactions
-        </h3>
+        <h3 className="text-xl font-bold text-gray-900">All Transactions</h3>
         <select
           value={statusFilter}
           onChange={(e) => {
@@ -148,7 +146,7 @@ const TransactionsTable = ({ searchQuery = "" }) => {
           className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer bg-white"
         >
           <option value="All">All</option>
-          <option value="Completed">Completed</option>
+          <option value="Success">Success</option>
           <option value="Pending">Pending</option>
           <option value="Failed">Failed</option>
         </select>

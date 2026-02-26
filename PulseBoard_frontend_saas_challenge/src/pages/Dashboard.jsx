@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/charts/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
-import SearchBar from "../components/dashboard/SearchBar";
 import RecentActivity from "../components/dashboard/RecentActivity";
-import TransactionsTable from "../components/dashboard/TransactionsTable";
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-
   return (
     <Container className="py-8">
       <div className="space-y-8">
@@ -96,19 +92,9 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Search Bar Section */}
-        <section>
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
-        </section>
-
         {/* Recent Activity Section */}
         <section>
           <RecentActivity />
-        </section>
-
-        {/* Transactions Section */}
-        <section>
-          <TransactionsTable searchQuery={searchQuery} />
         </section>
       </div>
     </Container>
