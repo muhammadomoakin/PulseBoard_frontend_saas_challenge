@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   LayoutDashboard,
   History,
@@ -9,6 +10,14 @@ import {
 } from "lucide-react";
 
 const Sidebar = ({ isOpen, onClose }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   const menuItems = [
     { icon: <LayoutDashboard size={20} />, label: "Dashboard", href: "/" },
     {
@@ -85,7 +94,10 @@ const Sidebar = ({ isOpen, onClose }) => {
 
         {/* User / Bottom Section */}
         <div className="p-4 border-t border-slate-800">
-          <button className="flex items-center gap-3 w-full px-4 py-3 rounded-lg hover:bg-slate-800/50 hover:text-slate-100 transition-all duration-200 text-slate-400 group">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg hover:bg-slate-800/50 hover:text-slate-100 transition-all duration-200 text-slate-400 group"
+          >
             <LogOut size={20} className="group-hover:text-slate-100" />
             <span>Logout</span>
           </button>
