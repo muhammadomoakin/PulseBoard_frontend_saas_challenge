@@ -3,10 +3,47 @@ import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/charts/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
 import RecentActivity from "../components/dashboard/RecentActivity";
+import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
+  const { isAuthenticated, login, logout } = useAuth();
+
   return (
     <Container className="py-8">
+      {/* Temporary Test Auth UI */}
+      <div className="mb-6 p-4 bg-white rounded-lg border border-dashed border-slate-300 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
+            Auth Status:
+          </span>
+          <span
+            className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
+              isAuthenticated
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {isAuthenticated ? "Logged In" : "Logged Out"}
+          </span>
+        </div>
+        <div className="flex gap-2">
+          <Button
+            onClick={login}
+            variant="primary"
+            className="!py-1.5 !px-3 font-bold"
+          >
+            Login
+          </Button>
+          <Button
+            onClick={logout}
+            variant="secondary"
+            className="!py-1.5 !px-3 font-bold text-red-600 hover:text-red-700"
+          >
+            Logout
+          </Button>
+        </div>
+      </div>
+
       <div className="space-y-8">
         {/* Header Section */}
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
