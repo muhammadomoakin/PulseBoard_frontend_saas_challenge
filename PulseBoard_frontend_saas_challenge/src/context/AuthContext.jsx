@@ -1,9 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState } from "react";
+import { useToast } from "./ToastContext";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const { showToast } = useToast();
   // Use lazy initializer to check localStorage immediately
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem("auth_token");
@@ -13,12 +15,14 @@ export const AuthProvider = ({ children }) => {
     // Set isAuthenticated to true and store a mock token
     localStorage.setItem("auth_token", "mock_token_12345");
     setIsAuthenticated(true);
+    showToast("Successfully logged in", "success");
   };
 
   const logout = () => {
     // Set isAuthenticated to false and remove token
     localStorage.removeItem("auth_token");
     setIsAuthenticated(false);
+    showToast("Logged out successfully", "success");
   };
 
   return (
