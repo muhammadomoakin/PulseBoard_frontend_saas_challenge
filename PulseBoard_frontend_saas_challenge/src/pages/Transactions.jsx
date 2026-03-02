@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "../components/ui";
+import { Container, Button } from "../components/ui";
 import TransactionsTable from "../components/dashboard/TransactionsTable";
 import SearchBar from "../components/dashboard/SearchBar";
-import { Loader2 } from "lucide-react";
-import { transactions } from "../data/transactions";
+import { Loader2, Plus } from "lucide-react";
+import { useTransactions } from "../context/TransactionsContext";
 
 const Transactions = () => {
+  const { transactions, addTransaction } = useTransactions();
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -18,18 +19,42 @@ const Transactions = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleAddMockTransaction = () => {
+    const newTx = {
+      id: `TRX-${Math.floor(Math.random() * 1000)
+        .toString()
+        .padStart(3, "0")}`,
+      customerName: "New Customer",
+      email: "new@example.com",
+      amount: `$${(Math.random() * 5000).toFixed(2)}`,
+      status: ["Success", "Pending", "Failed"][Math.floor(Math.random() * 3)],
+      date: new Date().toISOString().split("T")[0],
+    };
+    addTransaction(newTx);
+  };
+
   return (
     <Container className="py-8">
       <div className="flex flex-col gap-8">
         {/* Page Header */}
-        <header>
-          <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            All Transactions
-          </h2>
-          <p className="text-gray-500 mt-2">
-            View and manage your entire transaction history with filters and
-            search.
-          </p>
+        <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              All Transactions
+            </h2>
+            <p className="text-gray-500 mt-2">
+              View and manage your entire transaction history with filters and
+              search.
+            </p>
+          </div>
+          <Button
+            variant="primary"
+            onClick={handleAddMockTransaction}
+            className="flex items-center gap-2"
+          >
+            <Plus size={18} />
+            New Transaction
+          </Button>
         </header>
 
         {/* Search and Filters Section - Only show if transactions exist */}

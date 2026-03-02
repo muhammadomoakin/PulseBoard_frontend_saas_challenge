@@ -28,7 +28,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { Container, Card } from "../components/ui";
-import { transactions } from "../data/transactions";
+import { useTransactions } from "../context/TransactionsContext";
 
 /**
  * Helper to format currency
@@ -69,6 +69,7 @@ const CustomTooltip = ({ active, payload, label }) => {
  * Features high-level KPIs and detailed graphical reporting.
  */
 const Analytics = () => {
+  const { transactions } = useTransactions();
   // Process data from transactions
   const stats = useMemo(() => {
     // Helper to parse currency strings like "$1,250.00"
@@ -128,7 +129,7 @@ const Analytics = () => {
       dailyData: sortedDailyData,
       pieData,
     };
-  }, []);
+  }, [transactions]);
 
   return (
     <Container className="py-8">

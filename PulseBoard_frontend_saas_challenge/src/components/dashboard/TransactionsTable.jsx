@@ -7,10 +7,10 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Card } from "../ui";
-
-import { transactions } from "@/data/transactions";
+import { useTransactions } from "../../context/TransactionsContext";
 
 const TransactionsTable = ({ searchQuery = "" }) => {
+  const { transactions } = useTransactions();
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
@@ -133,19 +133,26 @@ const TransactionsTable = ({ searchQuery = "" }) => {
   };
 
   return (
-    <Card className="shadow-sm overflow-hidden">
-      {/* Section Title */}
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-gray-900">All Transactions</h3>
+    <Card className="shadow-sm overflow-hidden p-0 border-none bg-white">
+      {/* Filters Section within Card */}
+      <div className="flex items-center justify-between p-6">
+        <div className="flex flex-col">
+          <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">
+            Transaction History
+          </h4>
+          <span className="text-xs text-gray-400 mt-1">
+            {filteredTransactions.length} results found
+          </span>
+        </div>
         <select
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer bg-white"
+          className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer bg-white font-medium text-gray-700"
         >
-          <option value="All">All</option>
+          <option value="All">All Statuses</option>
           <option value="Success">Success</option>
           <option value="Pending">Pending</option>
           <option value="Failed">Failed</option>
