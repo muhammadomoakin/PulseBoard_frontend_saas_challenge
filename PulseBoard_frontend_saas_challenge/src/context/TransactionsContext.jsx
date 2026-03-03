@@ -53,8 +53,18 @@ export const TransactionsProvider = ({ children }) => {
     });
   };
 
+  const deleteTransaction = (id) => {
+    setTransactions((prev) => prev.filter((tx) => tx.id !== id));
+  };
+
   return (
-    <TransactionsContext.Provider value={{ transactions, addTransaction }}>
+    <TransactionsContext.Provider
+      value={{
+        transactions,
+        addTransaction,
+        deleteTransaction,
+      }}
+    >
       {children}
     </TransactionsContext.Provider>
   );
