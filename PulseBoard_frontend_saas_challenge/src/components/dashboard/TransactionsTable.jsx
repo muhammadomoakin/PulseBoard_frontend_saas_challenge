@@ -10,7 +10,7 @@ import { Card } from "../ui";
 import { useTransactions } from "../../context/TransactionsContext";
 
 const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
-  const { transactions } = useTransactions();
+  const { transactions, deleteTransaction } = useTransactions();
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(true);
@@ -184,6 +184,9 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
               <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
                 Status
               </th>
+              <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
@@ -208,11 +211,14 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                   <td className="px-8 py-6">
                     <div className="h-7 bg-gray-100 rounded-full w-24"></div>
                   </td>
+                  <td className="px-8 py-6 text-right">
+                    <div className="h-4 bg-gray-100 rounded w-12 ml-auto"></div>
+                  </td>
                 </tr>
               ))
             ) : sortedTransactions.length === 0 ? (
               <tr>
-                <td colSpan="5">
+                <td colSpan="6">
                   <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50/20">
                     <div className="w-16 h-16 bg-white shadow-sm rounded-2xl flex items-center justify-center text-3xl mb-4 transform rotate-3">
                       🔍
@@ -265,6 +271,14 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                         {statusConfig.icon}
                         {transaction.status}
                       </span>
+                    </td>
+                    <td className="px-8 py-5 text-right">
+                      <button
+                        onClick={() => deleteTransaction(transaction.id)}
+                        className="text-red-500 hover:text-red-700 text-[10px] font-black uppercase tracking-widest transition-colors"
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );
