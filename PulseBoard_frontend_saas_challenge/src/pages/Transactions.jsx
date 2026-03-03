@@ -82,13 +82,15 @@ const Transactions = () => {
       (t) => t.status === "Pending",
     ).length;
 
-    const totalVolumeVal = transactions.reduce((acc, curr) => {
-      const amount =
-        typeof curr.amount === "string"
-          ? parseFloat(curr.amount.replace(/[$,]/g, ""))
-          : curr.amount;
-      return acc + (isNaN(amount) ? 0 : amount);
-    }, 0);
+    const totalVolumeVal = transactions
+      .filter((t) => t.status === "Success")
+      .reduce((acc, curr) => {
+        const amount =
+          typeof curr.amount === "string"
+            ? parseFloat(curr.amount.replace(/[$,]/g, ""))
+            : curr.amount;
+        return acc + (isNaN(amount) ? 0 : amount);
+      }, 0);
 
     return {
       totalCount,
@@ -97,11 +99,10 @@ const Transactions = () => {
       totalVolume: new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-        maximumFractionDigits: 0,
       }).format(totalVolumeVal),
       successRate:
         totalCount > 0
-          ? ((successCount / totalCount) * 100).toFixed(0) + "%"
+          ? ((successCount / totalCount) * 100).toFixed(1) + "%"
           : "0%",
     };
   }, [transactions]);

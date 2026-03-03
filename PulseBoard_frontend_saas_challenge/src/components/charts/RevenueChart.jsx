@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   LineChart,
   Line,
@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { monthlyRevenueData } from "../../data/analyticsData";
+import { useTransactions } from "../../context/TransactionsContext";
 import Card from "../ui/Card";
 
 // Helper to format currency
@@ -23,7 +23,6 @@ const formatCurrency = (value) => {
 
 /**
  * Custom Tooltip component for a more premium look
- * Defined outside the main component to follow React best practices
  */
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -57,25 +56,91 @@ const CustomTooltip = ({ active, payload, label }) => {
 /**
  * RevenueChart Component
  * A responsive line chart showing monthly revenue trends.
- * Styled for a modern SaaS dashboard aesthetic.
+ * Derives data from TransactionsContext for live updates.
  */
 const RevenueChart = () => {
+  const { transactions } = useTransactions();
+
+  const chartData = useMemo(() => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    // Group transactions by month
+    const monthlyMap = {};
+
+    // Initialize with some months to ensure the chart looks full if data is sparse
+    // or just process what we have.
+    transactions.forEach((tx) => {
+      const date = new Date(tx.date);
+      const monthIndex = date.getMonth();
+      const monthName = months[monthIndex];
+      const year = date.getFullYear();
+      const key = `${year}-${monthIndex}`;
+
+      if (!monthlyMap[key]) {
+        monthlyMap[key] = {
+          rawMonth: monthIndex,
+          rawYear: year,
+          month: monthName,
+          revenue: 0,
+        };
+      }
+
+      if (tx.status === "Success") {
+        const amount =
+          typeof tx.amount === "string"
+            ? parseFloat(tx.amount.replace(/[$,]/g, ""))
+            : tx.amount;
+        monthlyMap[key].revenue += amount;
+      }
+    });
+
+    // Convert to sorted array
+    const sortedData = Object.values(monthlyMap).sort((a, b) => {
+      if (a.rawYear !== b.rawYear) return a.rawYear - b.rawYear;
+      return a.rawMonth - b.rawMonth;
+    });
+
+    // Calculate growth percentages
+    return sortedData.map((curr, index, arr) => {
+      if (index === 0) return { ...curr, growth: 0 };
+      const prev = arr[index - 1];
+      const growth =
+        prev.revenue !== 0
+          ? ((curr.revenue - prev.revenue) / prev.revenue) * 100
+          : 0;
+      return { ...curr, growth: parseFloat(growth.toFixed(1)) };
+    });
+  }, [transactions]);
+
   return (
     <Card className="flex flex-col h-[400px] w-full group">
       <div className="mb-4 flex items-start justify-between">
         <div>
-          <h3 className="text-xl font-semibold text-slate-900 tracking-tight">
+          <h3 className="text-xl font-semibold text-slate-900 tracking-tight flex items-center gap-2">
             Revenue Overview
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
           </h3>
           <p className="text-sm text-slate-500 mt-1 font-medium">
-            Monthly recurring revenue performance
+            Live recurring revenue performance
           </p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 rounded-full border border-indigo-100">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
             <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">
-              MRR
+              Real-time
             </span>
           </div>
         </div>
@@ -84,7 +149,7 @@ const RevenueChart = () => {
       <div className="flex-1 w-full min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={monthlyRevenueData}
+            data={chartData}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
           >
             <CartesianGrid
@@ -103,7 +168,7 @@ const RevenueChart = () => {
               axisLine={false}
               tickLine={false}
               tick={{ fill: "#94a3b8", fontSize: 12, fontWeight: 500 }}
-              tickFormatter={(value) => `$${value / 1000}k`}
+              tickFormatter={(value) => `$${(value / 1000).toFixed(1)}k`}
             />
             <Tooltip
               content={<CustomTooltip />}
@@ -125,10 +190,8 @@ const RevenueChart = () => {
                 strokeWidth: 4,
                 stroke: "#fff",
                 fill: "#6366f1",
-                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
               }}
-              animationDuration={2000}
-              animationEasing="ease-in-out"
+              animationDuration={1500}
             />
           </LineChart>
         </ResponsiveContainer>
