@@ -5,6 +5,10 @@ import {
   AlertCircle,
   ChevronUp,
   ChevronDown,
+  Mail,
+  Calendar as CalendarIcon,
+  Trash2,
+  Edit2,
 } from "lucide-react";
 import { Card } from "../ui";
 import { useTransactions } from "../../context/TransactionsContext";
@@ -79,7 +83,6 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
     }
 
     if (sortField === "amount") {
-      // Handle both string currency format and raw numbers
       valueA =
         typeof valueA === "string"
           ? parseFloat(valueA.replace(/[$,]/g, ""))
@@ -102,7 +105,6 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
     Math.ceil(sortedTransactions.length / rowsPerPage),
   );
 
-  // Ensure current page is within valid bounds for calculation
   const safePage = Math.min(currentPage, totalPages);
 
   const paginatedTransactions = sortedTransactions.slice(
@@ -110,31 +112,31 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
     safePage * rowsPerPage,
   );
 
-  /**
-   * Returns Tailwind classes and icon for status badges based on transaction status.
-   * @param {string} status
-   */
   const getStatusConfig = (status) => {
     switch (status) {
       case "Success":
         return {
           bg: "bg-emerald-50 text-emerald-700 border-emerald-100",
           icon: <CheckCircle2 size={13} className="mr-1.5" />,
+          dot: "bg-emerald-500",
         };
       case "Pending":
         return {
           bg: "bg-amber-50 text-amber-700 border-amber-100",
           icon: <Clock size={13} className="mr-1.5" />,
+          dot: "bg-amber-500",
         };
       case "Failed":
         return {
           bg: "bg-rose-50 text-rose-700 border-rose-100",
           icon: <AlertCircle size={13} className="mr-1.5" />,
+          dot: "bg-rose-500",
         };
       default:
         return {
           bg: "bg-slate-50 text-slate-700 border-slate-100",
           icon: null,
+          dot: "bg-slate-400",
         };
     }
   };
@@ -149,100 +151,102 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
   };
 
   return (
-    <Card className="shadow-sm overflow-hidden p-0 border-none bg-white rounded-4xl">
+    <Card className="shadow-2xl shadow-slate-200/50 overflow-hidden p-0 border-none bg-white rounded-3xl">
       {/* Table Header Section within Card */}
-      <div className="flex items-center justify-between p-8 border-b border-gray-50 bg-white/50 backdrop-blur-sm">
-        <div className="flex flex-col gap-1">
-          <h4 className="text-xs font-black text-indigo-600 uppercase tracking-[0.2em]">
-            Transaction History
+      <div className="flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 border-b border-gray-50 bg-white/80 backdrop-blur-md sticky top-0 z-20 gap-4">
+        <div className="flex flex-col items-center sm:items-start gap-1">
+          <h4 className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.25em]">
+            Ledger Activity
           </h4>
-          <span className="text-sm font-semibold text-gray-400">
-            {filteredTransactions.length} results found for current filter
+          <span className="text-sm font-bold text-slate-400">
+            {filteredTransactions.length} total entries identified
+          </span>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+          <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">
+            Live Updates
           </span>
         </div>
       </div>
 
       {/* Responsive Table Container */}
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full no-scrollbar">
         <table className="min-w-full text-left border-collapse">
           <thead>
-            <tr className="bg-gray-50/30 border-b border-gray-50">
-              <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                ID
+            <tr className="bg-slate-50/50 border-b border-slate-100">
+              <th className="hidden lg:table-cell px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Identifier No.
               </th>
-              <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                Customer
+              <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Entity Details
               </th>
               <th
-                className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest cursor-pointer hover:bg-gray-100/50 transition-colors group"
+                className="hidden sm:table-cell px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:bg-slate-100/50 transition-colors group"
                 onClick={() => handleSort("date")}
               >
                 <div className="flex items-center">
-                  Date{" "}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    {renderSortIndicator("date")}
-                  </span>
+                  Timestamp{" "}
+                  <span className="ml-1">{renderSortIndicator("date")}</span>
                 </div>
               </th>
               <th
-                className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest cursor-pointer hover:bg-gray-100/50 transition-colors group"
+                className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:bg-slate-100/50 transition-colors group"
                 onClick={() => handleSort("amount")}
               >
                 <div className="flex items-center">
-                  Amount{" "}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    {renderSortIndicator("amount")}
-                  </span>
+                  Volume{" "}
+                  <span className="ml-1">{renderSortIndicator("amount")}</span>
                 </div>
               </th>
-              <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+              <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 Status
               </th>
-              <th className="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">
+              <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-slate-50">
             {isLoading ? (
               [...Array(5)].map((_, i) => (
                 <tr key={i} className="animate-pulse">
-                  <td className="px-8 py-6">
-                    <div className="h-4 bg-gray-100 rounded w-16"></div>
+                  <td className="hidden lg:table-cell px-8 py-6">
+                    <div className="h-4 bg-slate-100 rounded-lg w-16"></div>
                   </td>
                   <td className="px-8 py-6">
                     <div className="space-y-2">
-                      <div className="h-4 bg-gray-100 rounded w-40"></div>
-                      <div className="h-3 bg-gray-50 rounded w-24"></div>
+                      <div className="h-4 bg-slate-100 rounded-lg w-40"></div>
+                      <div className="h-3 bg-slate-50 rounded-lg w-24"></div>
                     </div>
                   </td>
-                  <td className="px-8 py-6">
-                    <div className="h-4 bg-gray-100 rounded w-24"></div>
+                  <td className="hidden sm:table-cell px-8 py-6">
+                    <div className="h-4 bg-slate-100 rounded-lg w-24"></div>
                   </td>
                   <td className="px-8 py-6">
-                    <div className="h-4 bg-gray-100 rounded w-20"></div>
+                    <div className="h-4 bg-slate-100 rounded-lg w-20"></div>
                   </td>
                   <td className="px-8 py-6">
-                    <div className="h-7 bg-gray-100 rounded-full w-24"></div>
+                    <div className="h-7 bg-slate-100 rounded-full w-24"></div>
                   </td>
                   <td className="px-8 py-6 text-right">
-                    <div className="h-4 bg-gray-100 rounded w-12 ml-auto"></div>
+                    <div className="h-4 bg-slate-100 rounded-lg w-8 ml-auto"></div>
                   </td>
                 </tr>
               ))
             ) : sortedTransactions.length === 0 ? (
               <tr>
                 <td colSpan="6">
-                  <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50/20">
-                    <div className="w-16 h-16 bg-white shadow-sm rounded-2xl flex items-center justify-center text-3xl mb-4 transform rotate-3">
-                      🔍
+                  <div className="flex flex-col items-center justify-center py-24 text-center">
+                    <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner animate-in zoom-in-50 duration-500">
+                      🗂️
                     </div>
-                    <h3 className="text-xl font-black text-gray-900 tracking-tight">
-                      No results found
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight">
+                      Zero results located
                     </h3>
-                    <p className="text-gray-400 text-sm mt-2 max-w-[250px] font-medium leading-relaxed">
-                      Try adjusting your search terms or filters to find what
-                      you're looking for.
+                    <p className="text-slate-400 text-sm mt-2 max-w-[280px] font-bold leading-relaxed">
+                      Modify your search criteria or filter parameters to
+                      broaden the result set.
                     </p>
                   </div>
                 </td>
@@ -253,52 +257,78 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                 return (
                   <tr
                     key={transaction.id}
-                    className="hover:bg-indigo-50/20 transition-all duration-300 group"
+                    className="hover:bg-indigo-50/30 transition-all duration-300 group"
                   >
-                    <td className="px-8 py-5 text-xs font-black text-gray-400 font-mono tracking-tighter">
+                    <td className="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 font-mono tracking-tighter">
                       {transaction.id}
                     </td>
-                    <td className="px-8 py-5">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-sm font-black text-gray-900 group-hover:text-indigo-600 transition-colors">
+                    <td className="px-8 py-6">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
                           {transaction.customerName}
                         </span>
-                        <span className="text-xs text-gray-400 font-semibold lowercase tracking-tight">
-                          {transaction.email}
-                        </span>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold lowercase">
+                          <Mail size={12} className="text-slate-300" />
+                          <span>{transaction.email}</span>
+                        </div>
                       </div>
                     </td>
-                    <td className="px-8 py-5 text-sm font-bold text-gray-500">
-                      {new Date(transaction.date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
+                    <td className="hidden sm:table-cell px-8 py-6">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm font-bold text-slate-600">
+                          {new Date(transaction.date).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            },
+                          )}
+                        </span>
+                        <div className="flex items-center gap-1 text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                          <CalendarIcon size={10} />
+                          <span>Standardized</span>
+                        </div>
+                      </div>
                     </td>
-                    <td className="px-8 py-5 text-sm font-black text-gray-900 tabular-nums">
-                      {transaction.amount}
+                    <td className="px-8 py-6">
+                      <div className="text-sm font-black text-slate-900 tabular-nums bg-slate-50 inline-block px-2.5 py-1 rounded-lg border border-slate-100">
+                        {transaction.amount}
+                      </div>
                     </td>
-                    <td className="px-8 py-5 text-right sm:text-left">
+                    <td className="px-8 py-6">
                       <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm ${statusConfig.bg}`}
+                        className={`inline-flex items-center px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border shadow-sm ${statusConfig.bg}`}
                       >
-                        {statusConfig.icon}
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full mr-2 ${statusConfig.dot}`}
+                        ></span>
                         {transaction.status}
                       </span>
                     </td>
-                    <td className="px-8 py-5 text-right">
-                      <button
-                        onClick={() => handleEdit(transaction)}
-                        className="text-blue-500 hover:text-blue-700 text-[10px] font-black uppercase tracking-widest mr-4 transition-colors"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => deleteTransaction(transaction.id)}
-                        className="text-red-500 hover:text-red-700 text-[10px] font-black uppercase tracking-widest transition-colors"
-                      >
-                        Delete
-                      </button>
+                    <td className="px-8 py-6 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => handleEdit(transaction)}
+                          className="p-2 hover:bg-blue-50 text-blue-500 rounded-lg transition-colors group/edit"
+                          title="Edit Entity"
+                        >
+                          <Edit2
+                            size={16}
+                            className="group-hover/edit:scale-110 transition-transform"
+                          />
+                        </button>
+                        <button
+                          onClick={() => deleteTransaction(transaction.id)}
+                          className="p-2 hover:bg-rose-50 text-rose-500 rounded-lg transition-colors group/del"
+                          title="Purge Entry"
+                        >
+                          <Trash2
+                            size={16}
+                            className="group-hover/del:scale-110 transition-transform"
+                          />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -310,15 +340,16 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
 
       {/* Pagination Controls */}
       {!isLoading && sortedTransactions.length > 0 && (
-        <div className="flex items-center justify-between p-8 bg-gray-50/30">
-          <div className="text-[10px] text-gray-400 font-black uppercase tracking-widest">
-            Page {safePage} of {totalPages}
+        <div className="flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 bg-slate-50/50 gap-4 border-t border-slate-100">
+          <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+            Page <span className="text-indigo-600">{safePage}</span> of{" "}
+            <span className="text-slate-900">{totalPages}</span>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 w-full sm:w-auto">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-5 py-2 border border-gray-100 rounded-xl text-[10px] font-black uppercase tracking-widest bg-white text-gray-600 hover:bg-gray-100 hover:border-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
+              className="flex-1 sm:flex-none px-6 py-2.5 border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 shadow-sm"
             >
               Back
             </button>
@@ -327,9 +358,9 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="px-5 py-2 border border-indigo-100 rounded-xl text-[10px] font-black uppercase tracking-widest bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-indigo-600/20"
+              className="flex-1 sm:flex-none px-6 py-2.5 border border-indigo-100 rounded-xl text-[10px] font-black uppercase tracking-widest bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-indigo-600/20"
             >
-              More
+              Next
             </button>
           </div>
         </div>

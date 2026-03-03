@@ -1,15 +1,7 @@
 import React from "react";
 import Card from "../ui/Card";
 import { useTransactions } from "../../context/TransactionsContext";
-import {
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  ShoppingCart,
-  UserPlus,
-  ArrowUpCircle,
-  RefreshCcw,
-} from "lucide-react";
+import { Clock, CheckCircle2, AlertCircle, ShoppingCart } from "lucide-react";
 
 /**
  * RecentActivity Component

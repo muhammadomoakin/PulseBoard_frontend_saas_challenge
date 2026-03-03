@@ -45,134 +45,151 @@ const Dashboard = () => {
   }, [transactions]);
 
   return (
-    <Container className="py-8">
-      {/* ... existing auth UI ... */}
-      <div className="mb-6 p-4 bg-white rounded-lg border border-dashed border-slate-300 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-slate-600 uppercase tracking-wider">
-            Auth Status:
-          </span>
-          <span
-            className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
-              isAuthenticated
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
+    <Container className="py-6 sm:py-10">
+      {/* Auth Status Banner - Better Responsive Design */}
+      <div className="mb-8 p-5 sm:p-6 bg-white rounded-3xl border border-slate-100 flex flex-col sm:flex-row items-center justify-between shadow-xl shadow-slate-200/40 gap-4">
+        <div className="flex items-center gap-4">
+          <div
+            className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isAuthenticated ? "bg-emerald-50" : "bg-rose-50"}`}
           >
-            {isAuthenticated ? "Logged In" : "Logged Out"}
-          </span>
+            <div
+              className={`w-3 h-3 rounded-full ${isAuthenticated ? "bg-emerald-500 animate-pulse" : "bg-rose-500"}`}
+            ></div>
+          </div>
+          <div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              Authentication
+            </p>
+            <p className="text-sm font-black text-slate-900">
+              {isAuthenticated ? "Identity Verified" : "Access Restricted"}
+            </p>
+          </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3 w-full sm:w-auto">
           <button
             onClick={login}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors"
+            className="flex-1 sm:flex-none px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20"
           >
             Login
           </button>
           <button
             onClick={logout}
-            className="px-4 py-2 bg-gray-100 text-red-600 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors border border-gray-200"
+            className="flex-1 sm:flex-none px-6 py-2.5 bg-slate-50 text-slate-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 transition-all border border-slate-200"
           >
             Logout
           </button>
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-10 sm:space-y-14">
         {/* Header Section */}
-        <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-              Dashboard Overview
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tighter leading-none">
+              Overview
             </h2>
-            <p className="text-gray-500 mt-1 text-sm sm:text-base">
-              Welcome back to your PulseBoard overview.
+            <p className="text-base sm:text-lg text-slate-500 font-bold max-w-lg leading-relaxed">
+              Monitoring your business pulse in real-time. Everything is looking
+              sharp today.
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="secondary">Export JSON</Button>
-            <Button variant="primary">New Project</Button>
+            <Button
+              variant="secondary"
+              className="px-6 py-3 rounded-2xl bg-white border-slate-200 text-xs font-black uppercase tracking-widest shadow-sm"
+            >
+              Export Data
+            </Button>
+            <Button
+              variant="primary"
+              className="px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl shadow-indigo-600/30"
+            >
+              New Project
+            </Button>
           </div>
         </header>
 
         {/* Stats Section */}
         <section>
-          <h3 className="text-xl font-semibold text-slate-900 mb-4">
-            Key Metrics
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="flex flex-col gap-1 border-l-4 border-l-green-500">
-              <span className="text-sm font-medium text-gray-500">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1.5 h-6 bg-indigo-600 rounded-full"></div>
+            <h3 className="font-black uppercase tracking-widest text-[11px] text-slate-400">
+              Core Performance Indicators
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            <Card className="flex flex-col gap-1 border-none shadow-xl shadow-slate-200/30 rounded-3xl p-6 group hover:translate-y-[-4px] transition-all duration-300">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 Total Revenue
               </span>
-              <div className="text-3xl font-bold text-gray-900">
+              <div className="text-3xl font-black text-slate-900 mt-1">
                 {metrics.totalRevenue}
               </div>
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-sm font-semibold text-green-600">
+              <div className="flex items-center gap-1.5 mt-4">
+                <span className="text-[10px] font-black px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
                   +20.1%
                 </span>
-                <span className="text-xs text-gray-400">from last month</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">
+                  Monthly
+                </span>
               </div>
             </Card>
 
-            <Card className="flex flex-col gap-1 border-l-4 border-l-blue-500">
-              <span className="text-sm font-medium text-gray-500">
-                Total Transactions
+            <Card className="flex flex-col gap-1 border-none shadow-xl shadow-slate-200/30 rounded-3xl p-6 group hover:translate-y-[-4px] transition-all duration-300">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Transactions
               </span>
-              <div className="text-3xl font-bold text-gray-900">
+              <div className="text-3xl font-black text-slate-900 mt-1">
                 {metrics.totalTransactions}
               </div>
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-sm font-semibold text-green-600">
+              <div className="flex items-center gap-1.5 mt-4">
+                <span className="text-[10px] font-black px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-full border border-indigo-100">
                   +12
                 </span>
-                <span className="text-xs text-gray-400">new today</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">
+                  Today
+                </span>
               </div>
             </Card>
 
-            <Card className="flex flex-col gap-1 border-l-4 border-l-indigo-500">
-              <span className="text-sm font-medium text-gray-500">
+            <Card className="flex flex-col gap-1 border-none shadow-xl shadow-slate-200/30 rounded-3xl p-6 group hover:translate-y-[-4px] transition-all duration-300">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 Success Rate
               </span>
-              <div className="text-3xl font-bold text-gray-900">
+              <div className="text-3xl font-black text-slate-900 mt-1">
                 {metrics.successRate}
               </div>
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-sm font-semibold text-green-600">
-                  +2%
+              <div className="flex items-center gap-1.5 mt-4">
+                <span className="text-[10px] font-black px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
+                  OPTIMAL
                 </span>
-                <span className="text-xs text-gray-400">than average</span>
               </div>
             </Card>
 
-            <Card className="flex flex-col gap-1 border-l-4 border-l-yellow-500">
-              <span className="text-sm font-medium text-gray-500">
-                Pending Actions
+            <Card className="flex flex-col gap-1 border-none shadow-xl shadow-slate-200/30 rounded-3xl p-6 group hover:translate-y-[-4px] transition-all duration-300">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Pending
               </span>
-              <div className="text-3xl font-bold text-gray-900">
+              <div className="text-3xl font-black text-slate-900 mt-1">
                 {metrics.pendingCount}
               </div>
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-sm font-semibold text-yellow-600">
-                  High Priority
+              <div className="flex items-center gap-1.5 mt-4">
+                <span className="text-[10px] font-black px-2 py-0.5 bg-amber-50 text-amber-600 rounded-full border border-amber-100">
+                  ACTION REQ.
                 </span>
-                <span className="text-xs text-gray-400">needs review</span>
               </div>
             </Card>
           </div>
         </section>
 
         {/* Charts Section */}
-        <section>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <RevenueChart />
-            <UsersGrowthChart />
-          </div>
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <RevenueChart />
+          <UsersGrowthChart />
         </section>
 
         {/* Recent Activity Section */}
-        <section>
+        <section className="animate-in fade-in slide-in-from-bottom-8 duration-700">
           <RecentActivity />
         </section>
       </div>
