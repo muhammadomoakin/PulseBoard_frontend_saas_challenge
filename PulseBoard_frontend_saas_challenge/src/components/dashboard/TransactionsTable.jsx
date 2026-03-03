@@ -10,7 +10,21 @@ import { Card } from "../ui";
 import { useTransactions } from "../../context/TransactionsContext";
 
 const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
-  const { transactions, deleteTransaction } = useTransactions();
+  const { transactions, deleteTransaction, updateTransaction } =
+    useTransactions();
+
+  const handleEdit = (transaction) => {
+    const newName = prompt(
+      "Enter new customer name:",
+      transaction.customerName,
+    );
+    if (!newName) return;
+
+    updateTransaction({
+      ...transaction,
+      customerName: newName,
+    });
+  };
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(true);
@@ -273,6 +287,12 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                       </span>
                     </td>
                     <td className="px-8 py-5 text-right">
+                      <button
+                        onClick={() => handleEdit(transaction)}
+                        className="text-blue-500 hover:text-blue-700 text-[10px] font-black uppercase tracking-widest mr-4 transition-colors"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={() => deleteTransaction(transaction.id)}
                         className="text-red-500 hover:text-red-700 text-[10px] font-black uppercase tracking-widest transition-colors"
