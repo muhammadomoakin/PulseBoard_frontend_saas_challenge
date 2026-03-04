@@ -168,9 +168,6 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
           <h4 className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.25em]">
             Ledger Activity
           </h4>
-          <span className="text-sm font-bold text-slate-400">
-            {filteredTransactions.length} total entries identified
-          </span>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100">
           <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
@@ -178,6 +175,14 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
             Live Updates
           </span>
         </div>
+      </div>
+
+      <div className="px-6 sm:px-8 mb-4">
+        <p className="text-sm text-gray-500">
+          {searchQuery
+            ? `Showing ${filteredTransactions.length} of ${transactions.length} transactions`
+            : `Showing ${transactions.length} transactions`}
+        </p>
       </div>
 
       {/* Responsive Table Container */}
