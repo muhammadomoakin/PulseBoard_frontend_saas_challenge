@@ -247,17 +247,31 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
             ) : sortedTransactions.length === 0 ? (
               <tr>
                 <td colSpan="6">
-                  <div className="flex flex-col items-center justify-center py-24 text-center">
-                    <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner animate-in zoom-in-50 duration-500">
-                      🗂️
-                    </div>
-                    <h3 className="text-xl font-black text-slate-900 tracking-tight">
-                      Zero results located
-                    </h3>
-                    <p className="text-slate-400 text-sm mt-2 max-w-[280px] font-bold leading-relaxed">
-                      Modify your search criteria or filter parameters to
-                      broaden the result set.
-                    </p>
+                  <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+                    {transactions.length > 0 ? (
+                      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <h3 className="text-xl font-black text-slate-900 tracking-tight">
+                          No transactions found for '{searchQuery}'
+                        </h3>
+                        <p className="text-slate-400 text-sm mt-2 max-w-[280px] mx-auto font-bold leading-relaxed">
+                          Modify your search criteria or filter parameters to
+                          broaden the result set.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="animate-in zoom-in-50 duration-500">
+                        <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner mx-auto">
+                          �
+                        </div>
+                        <h3 className="text-xl font-black text-slate-900 tracking-tight">
+                          Zero results located
+                        </h3>
+                        <p className="text-slate-400 text-sm mt-2 max-w-[280px] mx-auto font-bold leading-relaxed">
+                          Your ledger is currently empty. Add your first
+                          transaction to get started.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </td>
               </tr>
