@@ -29,6 +29,16 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
       customerName: newName,
     });
   };
+
+  const handleDelete = (transaction) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete transaction ${transaction.id}?`,
+    );
+
+    if (!confirmDelete) return;
+
+    deleteTransaction(transaction.id);
+  };
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(true);
@@ -319,7 +329,7 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                           />
                         </button>
                         <button
-                          onClick={() => deleteTransaction(transaction.id)}
+                          onClick={() => handleDelete(transaction)}
                           className="p-2 hover:bg-rose-50 text-rose-500 rounded-lg transition-colors group/del"
                           title="Purge Entry"
                         >
