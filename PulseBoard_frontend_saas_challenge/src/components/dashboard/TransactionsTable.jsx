@@ -39,6 +39,10 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
 
     deleteTransaction(transaction.id);
   };
+
+  const handleRowClick = (transaction) => {
+    console.log("Transaction clicked:", transaction, "ID:", transaction.id);
+  };
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(true);
@@ -286,7 +290,8 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                 return (
                   <tr
                     key={transaction.id}
-                    className="hover:bg-indigo-50/30 transition-all duration-300 group"
+                    onClick={() => handleRowClick(transaction)}
+                    className="cursor-pointer hover:bg-slate-50 transition-all duration-300 group"
                   >
                     <td className="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 font-mono tracking-tighter">
                       {transaction.id}
@@ -338,7 +343,10 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                     <td className="px-8 py-6 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
-                          onClick={() => handleEdit(transaction)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEdit(transaction);
+                          }}
                           className="p-2 hover:bg-blue-50 text-blue-500 rounded-lg transition-colors group/edit"
                           title="Edit Entity"
                         >
@@ -348,7 +356,10 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                           />
                         </button>
                         <button
-                          onClick={() => handleDelete(transaction)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(transaction);
+                          }}
                           className="p-2 hover:bg-rose-50 text-rose-500 rounded-lg transition-colors group/del"
                           title="Purge Entry"
                         >
