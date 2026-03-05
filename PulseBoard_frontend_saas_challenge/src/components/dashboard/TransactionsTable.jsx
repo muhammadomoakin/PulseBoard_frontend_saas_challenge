@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   Clock,
@@ -16,6 +17,7 @@ import { useTransactions } from "../../context/TransactionsContext";
 const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
   const { transactions, deleteTransaction, updateTransaction } =
     useTransactions();
+  const navigate = useNavigate();
 
   const handleEdit = (transaction) => {
     const newName = prompt(
@@ -41,7 +43,7 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
   };
 
   const handleRowClick = (transaction) => {
-    console.log("Transaction clicked:", transaction, "ID:", transaction.id);
+    navigate(`/transactions/${transaction.id}`);
   };
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
@@ -291,7 +293,7 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
                   <tr
                     key={transaction.id}
                     onClick={() => handleRowClick(transaction)}
-                    className="cursor-pointer hover:bg-slate-50 transition-all duration-300 group"
+                    className="cursor-pointer hover:bg-gray-50 transition duration-300 group"
                   >
                     <td className="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 font-mono tracking-tighter">
                       {transaction.id}
