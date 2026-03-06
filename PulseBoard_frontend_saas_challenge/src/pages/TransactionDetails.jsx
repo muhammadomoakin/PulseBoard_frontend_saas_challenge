@@ -12,7 +12,7 @@ import {
 const TransactionDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { transactions } = useTransactions();
+  const { transactions, updateTransactionStatus } = useTransactions();
 
   const transaction = transactions.find((tx) => tx.id === id);
 
@@ -37,7 +37,7 @@ const TransactionDetails = () => {
   }
 
   const handleStatusChange = (newStatus) => {
-    console.log("New status:", newStatus);
+    updateTransactionStatus(id, newStatus);
   };
 
   return (

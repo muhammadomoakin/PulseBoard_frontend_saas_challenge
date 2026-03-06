@@ -63,6 +63,12 @@ export const TransactionsProvider = ({ children }) => {
     );
   };
 
+  const updateTransactionStatus = (id, newStatus) => {
+    setTransactions((prev) =>
+      prev.map((tx) => (tx.id === id ? { ...tx, status: newStatus } : tx)),
+    );
+  };
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -70,6 +76,7 @@ export const TransactionsProvider = ({ children }) => {
         addTransaction,
         deleteTransaction,
         updateTransaction,
+        updateTransactionStatus,
       }}
     >
       {children}
