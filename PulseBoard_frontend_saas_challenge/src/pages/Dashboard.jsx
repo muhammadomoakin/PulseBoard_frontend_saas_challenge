@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Button, Card, Container } from "../components/ui";
-import RevenueChart from "../components/charts/RevenueChart";
+import RevenueChart from "../components/RevenueChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
 import RecentActivity from "../components/dashboard/RecentActivity";
 import { useAuth } from "../context/AuthContext";
@@ -182,9 +182,13 @@ const Dashboard = () => {
           </div>
         </section>
 
+        <div className="mt-8 bg-white p-6 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-4">Revenue Overview</h2>
+          <RevenueChart />
+        </div>
+
         {/* Charts Section */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-          <RevenueChart />
           <UsersGrowthChart />
         </section>
 
