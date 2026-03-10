@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/RevenueChart";
+import TransactionsChart from "../components/TransactionsChart";
 import UsersGrowthChart from "../components/charts/UsersGrowthChart";
 import RecentActivity from "../components/dashboard/RecentActivity";
 import { useAuth } from "../context/AuthContext";
@@ -182,15 +183,22 @@ const Dashboard = () => {
           </div>
         </section>
 
-        <div className="mt-8 bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-4">Revenue Overview</h2>
-          <RevenueChart />
-        </div>
-
         {/* Charts Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-          <UsersGrowthChart />
-        </section>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-lg font-semibold mb-4 text-slate-900">
+              Revenue Overview
+            </h2>
+            <RevenueChart />
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-lg font-semibold mb-4 text-slate-900">
+              Transactions Overview
+            </h2>
+            <TransactionsChart />
+          </div>
+        </div>
 
         {/* Recent Activity Section */}
         <section className="animate-in fade-in slide-in-from-bottom-8 duration-700">
