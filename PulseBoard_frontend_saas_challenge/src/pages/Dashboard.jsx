@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/RevenueChart";
 import TransactionsChart from "../components/TransactionsChart";
@@ -9,6 +9,7 @@ import { useTransactions } from "../context/TransactionsContext";
 const Dashboard = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { transactions } = useTransactions();
+  const [timeRange, setTimeRange] = useState("6m");
 
   // Calculate metrics based on transaction data
   const metrics = useMemo(() => {
@@ -182,20 +183,38 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">Revenue Overview</h2>
-            <RevenueChart />
+        {/* Analytics Section */}
+        <section>
+          <div className="flex items-center justify-between mt-10 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Analytics Overview
+            </h2>
+
+            <select
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="border rounded-md px-3 py-1 text-sm bg-white"
+            >
+              <option value="6m">Last 6 Months</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="30d">Last 30 Days</option>
+            </select>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">
-              Transactions Overview
-            </h2>
-            <TransactionsChart />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h2 className="text-lg font-semibold mb-4">Revenue Overview</h2>
+              <RevenueChart />
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow">
+              <h2 className="text-lg font-semibold mb-4">
+                Transactions Overview
+              </h2>
+              <TransactionsChart />
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Recent Activity Section */}
         <section className="animate-in fade-in slide-in-from-bottom-8 duration-700">
