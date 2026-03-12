@@ -14,7 +14,7 @@ import Card from "./ui/Card";
  * Sample Revenue data for demonstration.
  * In a real-world app, this would be fetched from an API or State Context.
  */
-const data = [
+const data6m = [
   { month: "Jan", revenue: 4000 },
   { month: "Feb", revenue: 3000 },
   { month: "Mar", revenue: 5000 },
@@ -23,11 +23,29 @@ const data = [
   { month: "Jun", revenue: 5300 },
 ];
 
+const data3m = [
+  { month: "Apr", revenue: 4200 },
+  { month: "May", revenue: 6100 },
+  { month: "Jun", revenue: 5300 },
+];
+
+const data30d = [
+  { month: "Week 1", revenue: 1200 },
+  { month: "Week 2", revenue: 1800 },
+  { month: "Week 3", revenue: 1600 },
+  { month: "Week 4", revenue: 2100 },
+];
+
 /**
  * RevenueChart Component
  * A premium revenue visualization component inspired by modern SaaS dashboards.
  */
-const RevenueChart = () => {
+const RevenueChart = ({ timeRange }) => {
+  let chartData;
+
+  if (timeRange === "3m") chartData = data3m;
+  else if (timeRange === "30d") chartData = data30d;
+  else chartData = data6m;
   return (
     <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       <div className="flex items-center justify-between mb-6">
@@ -47,7 +65,7 @@ const RevenueChart = () => {
       <div className="h-[300px] w-full mt-4">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={data}
+            data={chartData}
             margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
           >
             {/* Horizontal-only grid lines for a cleaner, modern look */}
