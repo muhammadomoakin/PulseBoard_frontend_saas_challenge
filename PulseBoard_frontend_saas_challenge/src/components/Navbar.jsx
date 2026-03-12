@@ -1,7 +1,10 @@
 import React from "react";
 import { Menu, Bell, User } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = ({ onMenuClick }) => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 sticky top-0 z-30">
       <div className="flex items-center gap-4">
@@ -17,6 +20,14 @@ const Navbar = ({ onMenuClick }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="border px-3 py-1 rounded-md text-sm transition-colors hover:bg-slate-50"
+        >
+          {theme === "light" ? "🌙 Dark Mode" : "☀ Light Mode"}
+        </button>
+
         {/* Notifications */}
         <button className="p-2 hover:bg-slate-100 rounded-full text-slate-500 relative">
           <Bell size={20} />
