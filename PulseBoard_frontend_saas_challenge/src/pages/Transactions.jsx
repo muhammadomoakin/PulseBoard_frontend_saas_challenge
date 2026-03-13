@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useTransactions } from "../context/TransactionsContext";
 import { useToast } from "../context/ToastContext";
+import toast from "react-hot-toast";
 
 // Helper component for stat cards with premium design
 const StatCard = ({ title, value, icon, trend, trendUp, subtitle }) => (
@@ -123,6 +124,7 @@ const Transactions = () => {
       date: new Date().toISOString().split("T")[0],
     };
     addTransaction(newTx);
+    toast.success("Transaction added successfully");
     showToast(`Transaction ${nextId} added to ledger!`, "success");
   };
 
