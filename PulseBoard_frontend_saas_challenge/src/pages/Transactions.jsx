@@ -57,7 +57,9 @@ const StatCard = ({ title, value, icon, trend, trendUp, subtitle }) => (
 const Transactions = () => {
   const { transactions, addTransaction } = useTransactions();
   const { showToast } = useToast();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => {
+    return localStorage.getItem("transactionSearch") || "";
+  });
   const [statusFilter, setStatusFilter] = useState("All");
   const [loading, setLoading] = useState(true);
 
@@ -69,6 +71,10 @@ const Transactions = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactionSearch", searchQuery);
+  }, [searchQuery]);
 
   // Calculate stats using useMemo for performance and reactivity
   const stats = useMemo(() => {
