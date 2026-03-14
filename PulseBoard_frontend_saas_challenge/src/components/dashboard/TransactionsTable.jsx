@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   CheckCircle2,
   Clock,
@@ -40,6 +41,7 @@ const TransactionsTable = ({ searchQuery = "", statusFilter = "All" }) => {
     if (!confirmDelete) return;
 
     deleteTransaction(transaction.id);
+    toast.error("Transaction deleted");
   };
 
   const handleRowClick = (transaction) => {
