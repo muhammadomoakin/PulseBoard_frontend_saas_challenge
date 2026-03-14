@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Button, Card, Container } from "../components/ui";
 import RevenueChart from "../components/RevenueChart";
 import TransactionsChart from "../components/TransactionsChart";
@@ -11,7 +11,13 @@ const Dashboard = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { transactions } = useTransactions();
   const { theme } = useTheme();
-  const [timeRange, setTimeRange] = useState("6m");
+  const [timeRange, setTimeRange] = useState(() => {
+    return localStorage.getItem("analyticsRange") || "6m";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("analyticsRange", timeRange);
+  }, [timeRange]);
 
   const isDark = theme === "dark";
 
